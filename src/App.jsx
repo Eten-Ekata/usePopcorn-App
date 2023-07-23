@@ -5,7 +5,10 @@ function App() {
 
   return (
     <>
-      <h1>IMADE</h1>
+       <NavBar>
+        <Search query={query} setQuery={setQuery} />
+        <NumResults movies={movies} />
+      </NavBar>
     </>
   )
 }
