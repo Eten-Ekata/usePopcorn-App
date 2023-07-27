@@ -1,14 +1,17 @@
 import { useState } from 'react'
 import './index.css'
+import Navbar from './components/Navbar'
+import Search from './components/Search'
+import NumResults from './components/NumResults'
 
 function App() {
 
   return (
     <>
-       <NavBar>
-        <Search query={query} setQuery={setQuery} />
-        <NumResults movies={movies} />
-      </NavBar>
+       <Navbar>
+        <Search />
+        <NumResults/>
+      </Navbar>
     </>
   )
 }
