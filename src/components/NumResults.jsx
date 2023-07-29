@@ -4,7 +4,9 @@ import PopContext from '../context/PopContext'
 const NumResults = () => {
   const{movies, setMovies} = useContext(PopContext)
   return (
-    <div>NumResults: {movies}</div>
+    <p className="num-results">
+    Found <strong>{movies.length}</strong> results
+  </p>
   )
 }
 

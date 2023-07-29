@@ -2,8 +2,8 @@ import { createContext, useState } from "react";
 const PopContext = createContext()
 
 export const PopProvider = ({ children }) => {
-    const [query, setQuery] = useState(100);
-    const [movies, setMovies] = useState(200);
+    const [query, setQuery] = useState("");
+    const [movies, setMovies] = useState([]);
   
     return (
       <PopContext.Provider
