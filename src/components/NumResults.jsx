@@ -5,7 +5,7 @@ const NumResults = () => {
   const{movies, setMovies} = useContext(PopContext)
   return (
     <p className="num-results">
-    Found <strong>eten</strong> results
+    Found <strong>{movies.length}</strong> results
   </p>
   )
 }
