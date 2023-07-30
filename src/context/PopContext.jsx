@@ -1,8 +1,10 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 const PopContext = createContext()
 
 export const PopProvider = ({ children }) => {
-    const [query, setQuery] = useState("");
+  const KEY = '687f849f';
+  
+    const [query, setQuery] = useState("dolly");
     const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(true);
@@ -15,6 +17,58 @@ export const PopProvider = ({ children }) => {
       
     }
   
+  useEffect(
+    function () {
+      // callback?.();
+
+      const controller = new AbortController();
+
+      async function fetchMovies() {
+        try {
+          setIsLoading(true);
+          setError("");
+
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+            { signal: controller.signal }
+          );
+
+          if (!res.ok)
+            throw new Error("Something went wrong with fetching movies");
+
+          const data = await res.json();
+          console.log(data)
+          if (data.Response === "False") throw new Error("Movie not found");
+
+          setMovies(data.Search);
+          setError("");
+        } catch (err) {
+          if (err.name !== "AbortError") {
+            console.log(err.message);
+            setError(err.message);
+          }
+        } finally {
+          setIsLoading(false);
+        }
+      }
+
+      if (query.length < 3) {
+        setMovies([]);
+        setError("");
+        return;
+      }
+
+      fetchMovies();
+
+      return function () {
+        controller.abort();
+      };
+    },
+    [query]
+  );
+
+  // // return { movies, isLoading, error };
+
   
     return (
       <PopContext.Provider
