@@ -3,8 +3,11 @@ import './index.css'
 import Navbar from './components/Navbar'
 import Search from './components/Search'
 import NumResults from './components/NumResults'
+import Main from './components/Main'
+import Box from './components/Box'
+import MovieList from './components/MovieList'
 
-function App() {
+const App = ()=>{
 
   return (
     <>
@@ -12,6 +15,11 @@ function App() {
         <Search />
         <NumResults/>
       </Navbar>
+      <Main>
+        <Box>
+      <MovieList />
+        </Box>
+      </Main>
     </>
   )
 }

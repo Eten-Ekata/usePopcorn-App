@@ -84,3 +84,20 @@ body {
   justify-self: end;
   font-size: 1.8rem;
 }
+
+.testing{
+  color: red;
+}
+
+.main{
+  margin-top: 10rem;
+}
+
+.box {
+  width: 42rem;
+  max-width: 42rem;
+  background-color: var(--color-background-500);
+  border-radius: 0.9rem;
+  overflow: scroll;
+  position: relative;
+}
