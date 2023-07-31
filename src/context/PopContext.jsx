@@ -10,11 +10,18 @@ export const PopProvider = ({ children }) => {
     const [isOpen, setIsOpen] = useState(true);
     const [selectedId, setSelectedId] = useState(null);
     const [error, setError] = useState("");
-
+    const [watched, setWatched] = useLocalStorageState([], "watched");
 
     const handleSelectMovie = (id)=>{
       setSelectedId((selectedId) => (id === selectedId ? null : id));
       
+    }
+    const handleCloseMovie =()=>{
+      setSelectedId(null);
+    }
+  
+    const handleAddWatched = (movie)=>{
+      setWatched((watched) => [...watched, movie]);
     }
   
   useEffect(
@@ -70,6 +77,22 @@ export const PopProvider = ({ children }) => {
   // // return { movies, isLoading, error };
 
   
+
+ function useLocalStorageState(initialState, key) {
+  const [value, setValue] = useState(function () {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? JSON.parse(storedValue) : initialState;
+  });
+
+  useEffect(
+    function () {
+      localStorage.setItem(key, JSON.stringify(value));
+    },
+    [value, key]
+  );
+
+  return [value, setValue];
+}
     return (
       <PopContext.Provider
         value={{
@@ -85,7 +108,11 @@ export const PopProvider = ({ children }) => {
           setSelectedId,
           handleSelectMovie,
           error,
-          setError
+          setError,
+          handleCloseMovie,
+          handleAddWatched,
+          useLocalStorageState,
+          watched
         }}
       >
         {children}
