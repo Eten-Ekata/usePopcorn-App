@@ -24,7 +24,7 @@ const App = ()=>{
       <MovieList />
         </Box>
         <Box>
-          {!selectedId ? (<MovieDetails/>)  
+          {selectedId ? (<MovieDetails/>)  
           : (
           <>
           <WatchedSummary/>
