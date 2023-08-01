@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useRef } from "react";
 const PopContext = createContext()
 
 export const PopProvider = ({ children }) => {
@@ -14,6 +14,7 @@ export const PopProvider = ({ children }) => {
     const [watched, setWatched] = useLocalStorageState([], "watched");
     const [movie, setMovie] = useState({});
     const [loading, setLoading] = useState(false);
+    const [userRating, setUserRating] = useState("");
 
     const {
       Title: title,
@@ -127,6 +128,36 @@ export const PopProvider = ({ children }) => {
   );
 //////////////////////////////
 
+//Rating Component
+const countRef = useRef(0);
+
+useEffect(
+  function () {
+    if (userRating) countRef.current++;
+  },
+  [userRating]
+);
+
+function handleAdd() {
+  const newWatchedMovie = {
+    imdbID: selectedId,
+    title,
+    year,
+    poster,
+    imdbRating: Number(imdbRating),
+    runtime: Number(runtime.split(" ").at(0)),
+    userRating,
+    countRatingDecisions: countRef.current,
+  };
+
+  handleAddWatched(newWatchedMovie);
+  handleCloseMovie();
+
+  // setAvgRating(Number(imdbRating));
+  // setAvgRating((avgRating) => (avgRating + userRating) / 2);
+}
+
+
  function useLocalStorageState(initialState, key) {
   const [value, setValue] = useState(function () {
     const storedValue = localStorage.getItem(key);
@@ -176,7 +207,10 @@ export const PopProvider = ({ children }) => {
           released,
           actors,
           director,
-          genre
+          genre,
+          userRating, 
+          setUserRating,
+          handleAdd
         }}
       >
         {children}
