@@ -2,24 +2,13 @@ import React, { useContext, useEffect } from 'react'
 import PopContext from '../context/PopContext'
 import Loader from './Loader'
 import Movie from './Movie'
+import ErrorMessage from './ErrorMessage'
 
 const MovieList = () => {
-    const{movies, setMovies, error, isLoading, query} = useContext(PopContext)
-
-//   const KEY = '687f849f';
-
-// useEffect(() => {
-//   const trial = async() =>{
-//     const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`)
-//     const data = await res.json();
-//     console.log(data)
-//   }
-
-//   trial()
-// }, [query])
-
+    const{movies, error, isLoading} = useContext(PopContext)
 
 if (isLoading) return <Loader />
+if(error) return <ErrorMessage/>
 return (
     <ul className="list list-movies">
       {movies?.map((movie) => (

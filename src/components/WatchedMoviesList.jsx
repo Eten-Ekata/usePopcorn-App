@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import PopContext from '../context/PopContext'
+import WatchedMovie from './WatchedMovie'
 
 const WatchedMoviesList = () => {
+  const {watched} = useContext(PopContext)
   return (
-    <div>WatchedMoviesList</div>
-  )
+    <ul className="list">
+      {watched.map((movie) => (
+        <WatchedMovie
+          movie={movie}
+          key={movie.imdbID}
+          
+        />
+      ))}
+    </ul>
+  );
 }
 
 export default WatchedMoviesList

@@ -40,6 +40,12 @@ export const PopProvider = ({ children }) => {
     const handleAddWatched = (movie)=>{
       setWatched((watched) => [...watched, movie]);
     }
+
+    function handleDeleteWatched(id) {
+      setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+    }
+  
+
   //Movie fetch function
   useEffect(
     function () {
@@ -210,7 +216,8 @@ function handleAdd() {
           genre,
           userRating, 
           setUserRating,
-          handleAdd
+          handleAdd,
+          handleDeleteWatched
         }}
       >
         {children}
